@@ -45,16 +45,14 @@ const ShowInfo = () => {
             <strong className="text-[40px] lg:text-[60px]">{city.current.temp_c}'C</strong>
             <div className='flex w-[100%] flex-row sm:flex-col justify-evenly items-center gap-2 mt-4'>
               <div className="flex items-center gap-3 text-center">
-              <FiSunrise size={48} color="white" />
+              <FiSunrise size={48} color="white" width={48} height={48} />
               <div className="flex flex-col">
                 <span className="font-semibold text-[20px]">Sunrise</span>
-                <div>
-                    <span className="font-semibold text-[20px]">{astro.astro.sunrise}</span>
-                </div>
+                <span className="font-semibold text-[20px]">{astro.astro.sunrise}</span>
               </div>
               </div>
               <div className="flex items-center gap-3 text-center">
-              <FiSunset size={48} color="white" />
+              <FiSunset size={48} color="white" width={48} height={48} />
               <div className="flex flex-col">
                 <span className="font-semibold text-[20px]">Sunset</span>
                 <span className="font-semibold text-[20px]">{astro.astro.sunset}</span>
@@ -63,27 +61,27 @@ const ShowInfo = () => {
             </div>
           </div>
           <div className="today-situation flex flex-row items-center justify-center sm:flex-col">
-            <img className='w-[100%] sm:w-[50%] today-img' src={`https:${city.current.condition.icon}`} alt="Condition" />
+            <img className='w-[100%] sm:w-[50%] today-img' src={`https:${city.current.condition.icon}`} alt="Condition"  width={200} height={200}/>
             <p className="font-semibold text-[32px] text-center">{city.current.condition.text}</p>
           </div>
           <div className="today-info flex flex-wrap gap-y-8 flex-row sm:flex-column">
             <div className="w-[50%] humidity flex flex-col items-center justify-between gap-3 ">
-              <WiHumidity size={40} color="white" />
+              <WiHumidity size={40} color="white" width={40} height={40} />
               <span>{city.current.humidity} %</span>
               <span>Humidity</span>
             </div>
             <div className="w-[50%] wind-speed flex flex-col items-center justify-between gap-3">
-              <FaWind size={30} color="white" />
+              <FaWind size={40} color="white"  width={40} height={40}/>
               <span>{city.current.wind_kph} kph</span>
               <span>WInd speed</span>
             </div>
             <div className="w-[50%] pascal flex flex-col items-center justify-between gap-3">
-              <MdSpeed size={30} color="white" />
+              <MdSpeed size={40} color="white" width={40} height={40} />
               <span>{city.current.pressure_mb} mbar</span>
               <span>Pressure</span>
             </div>
             <div className="w-[50%] uv flex flex-col items-center justify-between gap-3">
-              <TbUvIndex size={30}  color="white"/>
+              <TbUvIndex size={40}  color="white" width={40} height={40}/>
               <span>{city.current.uv} uv</span>
               <span>UV Index</span>
             </div>
@@ -105,7 +103,7 @@ const ShowInfo = () => {
                   return (
                     <tr key={index} className="border-b-2 border-gray-200">
                       <td className="px-2 flex items-center justify-center">
-                        <img src={`https:${item.day.condition.icon}`} alt="" w={100}/>
+                        <img className='forecast-img' src={`https:${item.day.condition.icon}`} alt="Condition" w={100} height={100}/>
                       </td>
                       <td className="px-2 ">{item.day.avgtemp_c}°C</td>
                       <td className="px-2 ">{format(new Date(item.date), "EEE dd MMM")}</td>
