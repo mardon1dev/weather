@@ -7,6 +7,7 @@ import { WiHumidity } from "react-icons/wi";
 import { FaWind } from "react-icons/fa";
 import { MdSpeed } from "react-icons/md";
 import { TbUvIndex } from "react-icons/tb";
+import { format } from 'date-fns';
 
 import "./ShowInfo.css"
 
@@ -17,7 +18,6 @@ const ShowInfo = () => {
     const city = info.data;
 
     const astro = city.forecast.forecastday[0];
-    const hourlyForecast = astro.hour;
     const forecast = city.forecast.forecastday.slice(1, city.forecast.forecastday.length);
 
   return (
@@ -33,15 +33,16 @@ const ShowInfo = () => {
         <input className='search__input' value={search} onChange={e=>setSearch(e.target.value)} id='text' name='text' type="text" placeholder='Search for your city...' />
         <button className='search__button ml-5' onClick={handleSearch}>Show data</button>
       </div>
-      <div className='show flex flex-wrap text-white gap-3 gap-y-10 md:justify-between  w-full items-center justify-center '>
+      <div className='show flex flex-wrap text-white gap-y-4 md:justify-between  w-full items-center justify-center '>
         <div className='city flex justify-center flex-col items-center text-center w-[100%] lg:justify-between md:w-[30%]' >
           <p className="text-[24px] lg:text-[48px]  font-bold">{city.location.name}</p>
+          <p>{city.location.country}</p>
           <span className="font-bold text-[48px] lg:text-[96px]">{city.location.localtime.split(" ").slice(1,2)}</span>
-          <span className="text-[24px] ">{city.location.localtime.split(" ").slice(0,1)}</span>
+          <span className="text-[24px] ">{(format(new Date(city.location.localtime.split(" ")[0]), "EEE, dd MMM"))}</span>
         </div>
         <div className='today flex flex-col justify-between w-[100%] md:w-[65%] sm:flex-row gap-y-5' >
           <div className='today-tem flex flex-col items-center justify-between'>
-            <strong className="text-[40px] lg:text-[80px]">{city.current.temp_c}'C</strong>
+            <strong className="text-[40px] lg:text-[60px]">{city.current.temp_c}'C</strong>
             <div className='flex w-[100%] flex-row sm:flex-col justify-evenly items-center gap-2 mt-4'>
               <div className="flex items-center gap-3 text-center">
               <FiSunrise size={48} color="white" />
@@ -88,34 +89,34 @@ const ShowInfo = () => {
             </div>
           </div>
         </div>
-        <div className="forecast w-[100%] md:w-[40%]">
+        <div className="forecast w-[100%] md:w-[40%] order-1 lg:order-2">
           <h2 className="font-bold text-[24px] text-center sm:text-[32px]">Forecast</h2>
           <table className="min-w-full text-left border-collapse">
-      <thead className='text-center'>
-        <tr className="border-b-2 border-gray-200">
-          <th className="px-2 py-2 font-bold text-[16px] sm:text-[24px]">Mood</th>
-          <th className="px-2 py-2 font-bold text-[16px] sm:text-[24px]">Temp</th>
-          <th className="px-2 py-2 font-bold text-[16px] sm:text-[24px]">Weather</th>
-        </tr>
-      </thead>
-      <tbody className='text-center'>
-        {
-          forecast && forecast.map((item, index) => {
-            return (
-              <tr key={index} className="border-b-2 border-gray-200">
-                <td className="px-2 flex items-center justify-center">
-                  <img src={`https:${item.day.condition.icon}`} alt="" w={100}/>
-                </td>
-                <td className="px-2 ">{item.day.avgtemp_c}°C</td>
-                <td className="px-2 ">{item.date}</td>
+            <thead className='text-center'>
+              <tr className="border-b-2 border-gray-200">
+                <th className="px-2 py-2 font-bold text-[16px] sm:text-[24px]">Mood</th>
+                <th className="px-2 py-2 font-bold text-[16px] sm:text-[24px]">Temp</th>
+                <th className="px-2 py-2 font-bold text-[16px] sm:text-[24px]">Weather</th>
               </tr>
-            )
-          })
-        }
-      </tbody>
-      </table>
+            </thead>
+            <tbody className='text-center'>
+              {
+                forecast && forecast.map((item, index) => {
+                  return (
+                    <tr key={index} className="border-b-2 border-gray-200">
+                      <td className="px-2 flex items-center justify-center">
+                        <img src={`https:${item.day.condition.icon}`} alt="" w={100}/>
+                      </td>
+                      <td className="px-2 ">{item.day.avgtemp_c}°C</td>
+                      <td className="px-2 ">{format(new Date(item.date), "EEE dd MMM")}</td>
+                    </tr>
+                  )
+                })
+              }
+            </tbody>
+          </table>
         </div>
-        <div className="hourly-forecast w-[100%] md:w-[55%] min-h-[300px]" >
+        <div className="hourly-forecast w-[100%] md:w-[55%] min-h-[300px] order-2 lg:order-1" >
           <h2 className="font-bold text-[24px] text-center sm:text-[32px]">Hourly Forecast</h2>
           <div className="flex justify-center gap-3 mt-4">
             <HourlyForecast  />

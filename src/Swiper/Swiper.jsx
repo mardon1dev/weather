@@ -14,19 +14,17 @@ const hourlyForecast = () => {
 
     const astro = city.forecast.forecastday[0];
     const hourlyForecast = astro.hour;
-    console.log(hourlyForecast);
-
 
   return (
     <>
     <Swiper
       spaceBetween={30}
       slidesPerView={2}
-      className='w-full sm:hidden block'
+      className='w-full sm:hidden block cursor-pointer'
     >
         {
             hourlyForecast && hourlyForecast.map((item, index) => {
-              if (item.time.split(" ").slice(1,2) > city.location.localtime.split(" ").slice(1,2)) {
+              if (new Date(item.time) > new Date(city.location.localtime)) {
                 return (
                     <SwiperSlide key={index}>
                         <div key={index} className="flex flex-col items-center justify-between gap-3 bg-[#373636] min-w-[80px] py-4 rounded-[30px] min-h-[200px] h-full">
@@ -45,11 +43,11 @@ const hourlyForecast = () => {
     <Swiper
       spaceBetween={30}
       slidesPerView={3}
-      className='w-full sm:block hidden'
+      className='w-full sm:block hidden cursor-pointer'
     >
         {
             hourlyForecast && hourlyForecast.map((item, index) => {
-              if (item.time.split(" ").slice(1,2) > city.location.localtime.split(" ").slice(1,2)) {
+              if (new Date(item.time) > new Date(city.location.localtime)) {
                 return (
                     <SwiperSlide key={index}>
                         <div key={index} className="flex flex-col items-center justify-between gap-3 bg-[#373636] min-w-[80px] py-4 rounded-[30px] min-h-[200px] h-full">
