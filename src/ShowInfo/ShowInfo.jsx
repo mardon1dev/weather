@@ -8,15 +8,30 @@ import { FaWind } from "react-icons/fa";
 import { MdSpeed } from "react-icons/md";
 import { TbUvIndex } from "react-icons/tb";
 import { format } from 'date-fns';
+import Logo from "../assets/weather.svg"
 
 import "./ShowInfo.css"
 
 const ShowInfo = () => {
 
-    const info = useContext(WeatherContext);
-    const {search, setSearch, handleSearch} = useContext(WeatherContext);
-    const city = info.data;
+    const {loading, data, error} = useContext(WeatherContext)
 
+    if (loading || !data) {
+      return <div className='container mx-auto'>
+          <div className='w-full h-[300px] flex items-center justify-center'>
+              <div className='logo-wrapper'>
+                  <img src={Logo} alt="logo" className='logo' width={100}/>
+              </div>
+          </div>
+        </div>
+    }
+    if (data.error) {
+      return <div className='container text-center font-bold text-[56px] text-white'>
+        <h1>City not found!</h1>
+      </div>
+    }
+
+    const city = data;
     const astro = city.forecast.forecastday[0];
     const forecast = city.forecast.forecastday.slice(1, city.forecast.forecastday.length);
 
@@ -24,15 +39,6 @@ const ShowInfo = () => {
     <div className='showinfo'>
     <div className="container mx-auto">
     <div className='search pb-[30px]'>
-      <div className='flex w-full justify-between pt-[30px] pb-[33px]'>
-        {/* <div className='change flex relative'>
-          <input type="checkbox" name="check" id="check" />
-          <label htmlFor="check"></label>
-          <span className='mode'></span>
-        </div> */}
-        <input className='search__input' value={search} onChange={e=>setSearch(e.target.value)} id='text' name='text' type="text" placeholder='Search for your city...' />
-        <button className='search__button ml-5' onClick={handleSearch}>Show data</button>
-      </div>
       <div className='show flex flex-wrap text-white gap-y-4 md:justify-between  w-full items-center justify-center '>
         <div className='city flex justify-center flex-col items-center text-center w-[100%] lg:justify-between md:w-[30%]' >
           <p className="text-[24px] lg:text-[48px]  font-bold">{city.location.name}</p>
