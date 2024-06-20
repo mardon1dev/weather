@@ -4,8 +4,6 @@ import Header from './Header/Header';
 import ShowInfo from './ShowInfo/ShowInfo';
 
 
-
-
 function App() {
 
   return (
