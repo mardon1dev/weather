@@ -16,7 +16,6 @@
             try {
                 const promise = await fetch(`https://api.weatherapi.com/v1/forecast.json?key=56f1c4b0938a440a95332811241806&q=${search ? search : "Tashkent"}&days=6`);
                 const data = await promise.json()
-                console.log(data);
                 setTimeout(() => {
                     setData(data)
                     setLoading(false)
