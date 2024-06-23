@@ -7,7 +7,7 @@
 
         const [data, setData] = useState(null);
         const [loading, setLoading] = useState(false)
-        const [search, setSearch] = useState("Tashkent");
+        const [search, setSearch] = useState("");
         const [error, setError] = useState(false);
 
         const handleSearch = async() =>{
